@@ -178,3 +178,21 @@ format:
 
 .PHONY: all build-linux install format lint \
 	go-mod-cache draw-deps clean build \
+
+proto-all: proto-format proto-lint proto-gen
+
+proto-gen:
+	@echo "Generating Protobuf files"
+	@cd proto;\
+	buf generate --template=buf.gen.gogo.yaml;\
+	cd ..;\
+	cp -r github.com/cosmos-builders/chaos/* .;\
+	rm -rf github.com
+
+proto-lint:
+	@buf lint proto
+
+proto-format:
+	@buf format proto -w
+
+.PHONY: proto-all proto-gen proto-lint proto-format
