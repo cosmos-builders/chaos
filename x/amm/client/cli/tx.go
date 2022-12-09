@@ -88,7 +88,7 @@ func GetRemovedLiquidityCmd() *cobra.Command {
 func GetSwapExactInCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "swap-exact-in [coin-in] [min-coin-out]",
-		Args:  cobra.ExactArgs(1),
+		Args:  cobra.ExactArgs(2),
 		Short: "Swap exact amount of input coin for output coin.",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -100,7 +100,7 @@ func GetSwapExactInCmd() *cobra.Command {
 			if err != nil {
 				return fmt.Errorf("invalid coin in: %w", err)
 			}
-			minCoinOut, err := sdk.ParseCoinNormalized(args[0])
+			minCoinOut, err := sdk.ParseCoinNormalized(args[1])
 			if err != nil {
 				return fmt.Errorf("invalid min coin out: %w", err)
 			}
@@ -118,7 +118,7 @@ func GetSwapExactInCmd() *cobra.Command {
 func GetSwapExactOutCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "swap-exact-out [coin-out] [max-coin-in]",
-		Args:  cobra.ExactArgs(1),
+		Args:  cobra.ExactArgs(2),
 		Short: "Swap input coin for exact amount of output coin",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -130,7 +130,7 @@ func GetSwapExactOutCmd() *cobra.Command {
 			if err != nil {
 				return fmt.Errorf("invalid coin out: %w", err)
 			}
-			maxCoinIn, err := sdk.ParseCoinNormalized(args[0])
+			maxCoinIn, err := sdk.ParseCoinNormalized(args[1])
 			if err != nil {
 				return fmt.Errorf("invalid max coin in: %w", err)
 			}
